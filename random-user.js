@@ -2,10 +2,22 @@ const btnEle=document.querySelector('.btn');
 
 function getUser(){
     fetch('https://randomuser.me/api/')
-    .then((response)=>response.json())
+    .then((response)=>{
+       if(!response.ok){
+        throw new Error('Request Failed')
+       }
+       
+       return response.json()
+    
+    })
     .then((data)=>{
         displayUser(data.results[0])
-});
+})
+.catch((error)=>{
+    document.querySelector('.flex-adding').innerHTML=`
+    <p class="error-mess">${error}</p>
+    `
+})
 
 }
 
